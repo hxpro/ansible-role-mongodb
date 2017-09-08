@@ -2,7 +2,7 @@ galaxy_info:
   author: Matěj Koudelka
   description: MongoDB
 
-  license: license (Proprietary)
+  license: license (WTFPL)
 
   min_ansible_version: 2.2
 
