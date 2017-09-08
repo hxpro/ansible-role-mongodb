@@ -1,0 +1,34 @@
+---
+- name: Install packages
+  package:
+    name="{{ item }}"
+  with_items:
+    - mongodb
+    - mongodb-server
+
+- name:
+  template:
+    src: mongod.conf.j2
+    dest: /etc/mongod.conf
+  notify: restart mongod
+
+- name: Start / enable mongod
+  systemd:
+    name: mongod
+    enabled: yes
+
+- name: firewall new connections
+  iptables:
+    chain: INPUT
+    action: insert
+    protocol: tcp
+    ctstate: NEW
+    destination_port: "{{ mongodb_port }}"
+    jump: ACCEPT
+
+- name: firewall related, established connections
+  iptables:
+    chain: INPUT
+    action: insert
+    ctstate: RELATED,ESTABLISHED
+    jump: ACCEPT
