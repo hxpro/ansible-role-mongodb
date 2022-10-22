@@ -24,7 +24,7 @@
       - mongodb-org-shell
       - mongodb-org-tools
 
-- name:
+- name: Mongodb config file
   template:
     src: mongod.conf.j2
     dest: /etc/mongod.conf
